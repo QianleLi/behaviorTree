@@ -37,15 +37,14 @@ BT::NodeStatus RoundRobinNode::tick()
 
     setStatus(BT::NodeStatus::RUNNING);
 
-    while (num_failed_children_ < num_children) {
+    while (num_failed_children_ < num_children) {    //除非所有节点都失败才退出
         TreeNode * child_node = children_nodes_[current_child_idx_];
         const BT::NodeStatus child_status = child_node->executeTick();
 
         switch (child_status) {
             case BT::NodeStatus::SUCCESS:
             {
-                // Wrap around to the first child
-                if (++current_child_idx_ >= num_children) {
+                if (++current_child_idx_ >= num_children) {   //执行完最后一个节点再回到第一个节点
                     current_child_idx_ = 0;
                 }
                 num_failed_children_ = 0;
@@ -53,9 +52,9 @@ BT::NodeStatus RoundRobinNode::tick()
                 return BT::NodeStatus::SUCCESS;
             }
 
-            case BT::NodeStatus::FAILURE:
+            case BT::NodeStatus::FAILURE:   //遇到失败则tick下一个节点
             {
-                if (++current_child_idx_ >= num_children) {
+                if (++current_child_idx_ >= num_children) {    //执行完最后一个节点再回到第一个节点
                     current_child_idx_ = 0;
                 }
                 num_failed_children_++;
@@ -86,9 +85,8 @@ void RoundRobinNode::halt()
 }
 
 }
-/*
+
 BT_REGISTER_NODES(factory)
     {
         factory.registerNodeType<BT::RoundRobinNode>("RoundRobin");
     }
-*/
