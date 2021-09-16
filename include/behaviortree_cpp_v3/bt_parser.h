@@ -1,8 +1,8 @@
 #ifndef PARSING_BT_H
 #define PARSING_BT_H
 
-#include "behaviortree_cpp_v3/bt_factory.h"
-#include "behaviortree_cpp_v3/blackboard.h"
+#include "bt_factory.h"
+#include "blackboard.h"
 
 namespace BT
 {

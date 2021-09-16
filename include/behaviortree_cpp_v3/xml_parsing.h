@@ -1,7 +1,7 @@
 #ifndef XML_PARSING_BT_H
 #define XML_PARSING_BT_H
 
-#include "behaviortree_cpp_v3/bt_parser.h"
+#include "bt_parser.h"
 
 namespace BT
 {

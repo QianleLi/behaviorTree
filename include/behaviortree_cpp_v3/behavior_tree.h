@@ -24,6 +24,10 @@
 #include "behaviortree_cpp_v3/controls/manual_node.h"
 #include "behaviortree_cpp_v3/controls/if_then_else_node.h"
 #include "behaviortree_cpp_v3/controls/while_do_else_node.h"
+#include "behaviortree_cpp_v3/controls/pipeline_sequence.h"
+#include "behaviortree_cpp_v3/controls/recovery_node.h"
+#include "behaviortree_cpp_v3/controls/round_robin_node.h"
+#include "behaviortree_cpp_v3/controls/one_frame_fallback.h"
 
 #include "behaviortree_cpp_v3/action_node.h"
 #include "behaviortree_cpp_v3/condition_node.h"
@@ -40,6 +44,7 @@
 #include "behaviortree_cpp_v3/decorators/force_success_node.h"
 #include "behaviortree_cpp_v3/decorators/force_failure_node.h"
 #include "behaviortree_cpp_v3/decorators/keep_running_until_failure_node.h"
+#include "behaviortree_cpp_v3/decorators/keep_running_until_success_node.h"
 #include "behaviortree_cpp_v3/decorators/blackboard_precondition.h"
 #include "behaviortree_cpp_v3/decorators/timeout_node.h"
 #include "behaviortree_cpp_v3/decorators/delay_node.h"
