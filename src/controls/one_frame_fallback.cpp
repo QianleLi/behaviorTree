@@ -10,6 +10,7 @@ namespace BT
     OneFrameFallback::OneFrameFallback(const std::string & name)
             : BT::ControlNode(name, {})
     {
+        setRegistrationID("OneFrameFallback");
     }
 
     OneFrameFallback::OneFrameFallback(
@@ -17,6 +18,7 @@ namespace BT
             const BT::NodeConfiguration & config)
             : BT::ControlNode(name, config)
     {
+
     }
 
     BT::NodeStatus OneFrameFallback::tick()
@@ -52,8 +54,10 @@ namespace BT
     }
 
 }
+/*
 #include <behaviortree_cpp_v3/bt_factory.h>
 BT_REGISTER_NODES(factory)
 {
     factory.registerNodeType<BT::OneFrameFallback>("OneFrameFallback");
 }
+*/

@@ -1,3 +1,6 @@
+/*
+ * 来自NAV2的控制节点，已测试，运行正常
+ */
 #ifndef BEHAVIORTREE_CPP_V3_RECOVERY_NODE_H
 #define BEHAVIORTREE_CPP_V3_RECOVERY_NODE_H
 #include <string>

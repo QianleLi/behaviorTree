@@ -22,6 +22,7 @@ namespace BT
 RoundRobinNode::RoundRobinNode(const std::string & name)
     : BT::ControlNode::ControlNode(name, {})
 {
+    setRegistrationID("RoundRobin");
 }
 
 RoundRobinNode::RoundRobinNode(
@@ -85,8 +86,10 @@ void RoundRobinNode::halt()
 }
 
 }
+/*
 #include <behaviortree_cpp_v3/bt_factory.h>
 BT_REGISTER_NODES(factory)
     {
         factory.registerNodeType<BT::RoundRobinNode>("RoundRobin");
     }
+*/

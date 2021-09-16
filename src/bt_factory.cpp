@@ -11,6 +11,7 @@
 */
 
 #include "behaviortree_cpp_v3/bt_factory.h"
+#include "behaviortree_cpp_v3/utils/shared_library.h"
 #include "behaviortree_cpp_v3/xml_parsing.h"
 
 #ifdef USING_ROS
@@ -30,13 +31,15 @@ BehaviorTreeFactory::BehaviorTreeFactory()
     registerNodeType<ReactiveFallback>("ReactiveFallback");
     registerNodeType<IfThenElseNode>("IfThenElse");
     registerNodeType<WhileDoElseNode>("WhileDoElse");
-    //registerNodeType<OneFrameFallback>("OneFrameFallback");
+    registerNodeType<OneFrameFallback>("OneFrameFallback");
+    registerNodeType<PipelineSequence>("PipelineSequence");
+    registerNodeType<RecoveryNode>("RecoveryNode");
+    registerNodeType<RoundRobinNode>("RoundRobin");
 
     registerNodeType<InverterNode>("Inverter");
     registerNodeType<RetryNode>("RetryUntilSuccesful"); //typo but back compatibility
     registerNodeType<RetryNode>("RetryUntilSuccessful"); // correct one
     registerNodeType<KeepRunningUntilFailureNode>("KeepRunningUntilFailure");
-    registerNodeType<KeepRunningUntilSuccessNode>("KeepRunningUntilSuccess");
     registerNodeType<RepeatNode>("Repeat");
     registerNodeType<TimeoutNode<>>("Timeout");
     registerNodeType<DelayNode>("Delay");

@@ -27,6 +27,7 @@ RecoveryNode::RecoveryNode(
       retry_count_(0)
 {
     getInput("number_of_retries", number_of_retries_);
+    setRegistrationID("RecoveryNode");
 }
 
 BT::NodeStatus RecoveryNode::tick()
@@ -121,9 +122,10 @@ void RecoveryNode::halt()
 }
 
 }
-
+/*
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
     factory.registerNodeType<BT::RecoveryNode>("RecoveryNode");
 }
+*/
