@@ -13,22 +13,21 @@
 #include "behaviortree_cpp_v3/control_node.h"
 namespace BT
 {
-class OneFrameFallback : public BT::ControlNode
-{
-    explicit OneFrameFallback(const std::string & name);
+    class OneFrameFallback : public BT::ControlNode
+    {
+    public:
+        explicit OneFrameFallback(const std::string & name);
 
-    OneFrameFallback(const std::string & name, const BT::NodeConfiguration & config);
+        OneFrameFallback(const std::string & name, const BT::NodeConfiguration & config);
 
-    void halt() override;
+        void halt() override;
 
-    static BT::PortsList providedPorts() {return {};}
+        static BT::PortsList providedPorts() {return {};}
 
-  protected:
-    /**
-     * @brief The main override required by a BT action
-     * @return BT::NodeStatus Status of tick execution
-     */
-    BT::NodeStatus tick() override;
-};
+    protected:
+
+        BT::NodeStatus tick() override;
+    };
+
 }
-#endif   //BEHAVIORTREE_CPP_V3_ONE_FRAME_FALLBACK_H
+#endif
