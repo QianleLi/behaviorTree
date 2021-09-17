@@ -16,6 +16,12 @@ BT::NodeStatus CheckBattery()
     return BT::NodeStatus::SUCCESS;
 }
 
+BT::NodeStatus CheckBatteryForceFail()
+{
+    std::cout << "[ Battery: NOT OK ]" << std::endl;
+    return BT::NodeStatus::FAILURE;
+}
+
 BT::NodeStatus CheckTemperature()
 {
     std::cout << "[ Temperature: OK ]" << std::endl;
@@ -33,6 +39,27 @@ BT::NodeStatus GripperInterface::open()
     _opened = true;
     std::cout << "GripperInterface::open" << std::endl;
     return BT::NodeStatus::SUCCESS;
+}
+
+BT::NodeStatus GripperInterface::open_force_fail()
+{
+    _opened = false;
+    std::cout << "GripperInterface::open, failed" << std::endl;
+    return BT::NodeStatus::FAILURE;
+}
+
+BT::NodeStatus GripperInterface::open_after_retries()
+{
+    if(try_cnt++ < 3){
+        _opened = false;
+        std::cout << "GripperInterface::open, failed" << std::endl;
+        return BT::NodeStatus::FAILURE;
+    }else{
+        try_cnt = 0;
+        _opened = true;
+        std::cout << "GripperInterface::open" << std::endl;
+        return BT::NodeStatus::SUCCESS;
+    }
 }
 
 BT::NodeStatus GripperInterface::close()

@@ -48,10 +48,13 @@ int main()
     StdCoutLogger logger_cout(tree);
     std::cout << "attempt 1" << std::endl;
     tree.tickRoot();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     std::cout << "attempt 2" << std::endl;
     tree.tickRoot();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     std::cout << "attempt 3" << std::endl;
     tree.tickRoot();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     std::cout << "attempt 4" << std::endl;
     tree.tickRoot();
 

@@ -1,6 +1,11 @@
 /*
  * 来自NAV2的控制节点，已测试，运行正常
  */
+/*
+ * 第一个节点失败后运行第二个节点，第二个节点失败后整个recovery失败，如果第二个节点成功，再运行第一个节点，视为一次retry；
+ * 在建立recovery节点的时候就设置retry的最大次数，超过次数第一个节点依然无法成功整个recovery失败。
+ * 整个recovery节点在一阵之内完成
+ */
 #ifndef BEHAVIORTREE_CPP_V3_RECOVERY_NODE_H
 #define BEHAVIORTREE_CPP_V3_RECOVERY_NODE_H
 #include <string>

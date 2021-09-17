@@ -6,8 +6,8 @@
 
 namespace DummyNodes
 {
-
 BT::NodeStatus CheckBattery();
+BT::NodeStatus CheckBatteryForceFail();
 
 BT::NodeStatus CheckTemperature();
 BT::NodeStatus SayHello();
@@ -20,11 +20,14 @@ class GripperInterface
     }
 
     BT::NodeStatus open();
+    BT::NodeStatus open_force_fail();
+    BT::NodeStatus open_after_retries();
 
     BT::NodeStatus close();
 
   private:
     bool _opened;
+    int try_cnt = 0;
 };
 
 //--------------------------------------

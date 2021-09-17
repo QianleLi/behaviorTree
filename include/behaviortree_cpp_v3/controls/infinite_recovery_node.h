@@ -4,6 +4,7 @@
 /*
  * 无限制的尝试第二个节点，除非第一个节点成功
  * 注意，这意味着本控制节点永远不会返回FAILURE
+ * 已测试通过
  */
 
 #ifndef BEHAVIORTREE_CPP_V3_INFINITE_RECOVERY_NODE_H
@@ -32,6 +33,8 @@ class InfiniteRecoveryNode : public BT::ControlNode
 
   private:
     unsigned int current_child_idx_;
+
+    const unsigned children_count = 2;      //recovery 必然有两个子节点
 
     BT::NodeStatus tick() override;
 
