@@ -57,3 +57,6 @@ target_link_libraries(mt01_one_frame_fallback ${BEHAVIOR_TREE_LIBRARY} bt_sample
 
 add_executable(mt02_infinite_recovery_node  mt02_infinite_recovery_node.cpp )
 target_link_libraries(mt02_infinite_recovery_node ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
+
+add_executable(mt03_one_frame_sequence  mt03_one_frame_sequence.cpp )
+target_link_libraries(mt03_one_frame_sequence ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)

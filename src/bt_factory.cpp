@@ -32,6 +32,7 @@ BehaviorTreeFactory::BehaviorTreeFactory()
     registerNodeType<IfThenElseNode>("IfThenElse");
     registerNodeType<WhileDoElseNode>("WhileDoElse");
     registerNodeType<OneFrameFallback>("OneFrameFallback");
+    registerNodeType<OneFrameSequence>("OneFrameSequence");
     registerNodeType<PipelineSequence>("PipelineSequence");
     registerNodeType<RecoveryNode>("RecoveryNode");
     registerNodeType<InfiniteRecoveryNode>("InfiniteRecoveryNode");

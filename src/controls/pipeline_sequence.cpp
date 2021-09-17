@@ -32,6 +32,7 @@ PipelineSequence::PipelineSequence(
     const BT::NodeConfiguration & config)
     : BT::ControlNode(name, config)
 {
+    setRegistrationID("PipelineSequence");
 }
 
 BT::NodeStatus PipelineSequence::tick()

@@ -1,6 +1,7 @@
 //
 // Created by Qianle Li on 2021/9/17.
 //
+// A test program to test infinite_recovery_node
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "dummy_nodes.h"
