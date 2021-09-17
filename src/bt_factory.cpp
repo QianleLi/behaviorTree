@@ -34,6 +34,7 @@ BehaviorTreeFactory::BehaviorTreeFactory()
     registerNodeType<OneFrameFallback>("OneFrameFallback");
     registerNodeType<PipelineSequence>("PipelineSequence");
     registerNodeType<RecoveryNode>("RecoveryNode");
+    registerNodeType<RecoveryNode>("InfiniteRecoveryNode");
     registerNodeType<RoundRobinNode>("RoundRobin");
 
     registerNodeType<InverterNode>("Inverter");

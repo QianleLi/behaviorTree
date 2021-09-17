@@ -111,6 +111,7 @@ list(APPEND BT_SOURCE
     src/controls/recovery_node.cpp
     src/controls/round_robin_node.cpp
     src/controls/one_frame_fallback.cpp
+    src/controls/infinite_recovery_node.cpp
 
     src/loggers/bt_cout_logger.cpp
     src/loggers/bt_file_logger.cpp

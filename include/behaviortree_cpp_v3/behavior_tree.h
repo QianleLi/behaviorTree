@@ -28,6 +28,7 @@
 #include "behaviortree_cpp_v3/controls/recovery_node.h"
 #include "behaviortree_cpp_v3/controls/round_robin_node.h"
 #include "behaviortree_cpp_v3/controls/one_frame_fallback.h"
+#include "behaviortree_cpp_v3/controls/infinite_recovery_node.h"
 
 #include "behaviortree_cpp_v3/action_node.h"
 #include "behaviortree_cpp_v3/condition_node.h"
