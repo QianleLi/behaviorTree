@@ -66,6 +66,48 @@ class SaySomething : public BT::SyncActionNode
     }
 };
 
+class LeaveMessages : public BT::SyncActionNode
+{
+  public:
+    LeaveMessages(const std::string& name, const BT::NodeConfiguration& config)
+        : BT::SyncActionNode(name, config)
+    {
+    }
+
+    // You must override the virtual function tick()
+    BT::NodeStatus tick() override;
+
+    // It is mandatory to define this static method.
+    static BT::PortsList providedPorts()
+    {
+        return{ BT::OutputPort<std::string>("message"), BT::OutputPort<float>("float_number"),
+                BT::OutputPort<int>("int_number") };
+    }
+  private:
+    std::string message;
+    float float_number = 0.5f;
+    int int_number = 6;
+};
+
+class SayLotsSomething : public BT::SyncActionNode
+{
+  public:
+    SayLotsSomething(const std::string& name, const BT::NodeConfiguration& config)
+        : BT::SyncActionNode(name, config)
+    {
+    }
+
+    // You must override the virtual function tick()
+    BT::NodeStatus tick() override;
+
+    // It is mandatory to define this static method.
+    static BT::PortsList providedPorts()
+    {
+        return{ BT::InputPort<std::string>("message"), BT::InputPort<float>("float_number"),
+            BT::InputPort<int>("int_number") };
+    }
+};
+
 //Same as class SaySomething, but to be registered with SimpleActionNode
 BT::NodeStatus SaySomethingSimple(BT::TreeNode& self);
 
@@ -81,6 +123,8 @@ inline void RegisterNodes(BT::BehaviorTreeFactory& factory)
     factory.registerSimpleAction("CloseGripper", std::bind(&GripperInterface::close, &grip_singleton));
     factory.registerNodeType<ApproachObject>("ApproachObject");
     factory.registerNodeType<SaySomething>("SaySomething");
+    factory.registerNodeType<SayLotsSomething>("SayLotsSomething");
+    factory.registerNodeType<LeaveMessages>("LeaveMessages");
 }
 
 } // end namespace

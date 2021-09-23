@@ -1,3 +1,5 @@
+#  注意，如果在BV75项目里更新了本动态库，在上传到机器的时候一定要一同更新动态库，否则会发生无法找到动态库中函数实现的情况。
+
 This repository is based on BehaviorTree C++.           
 The library is modified for our smart vacuum cleaner project and the boost lib was cross compiled for ARM achitecture cores.        
 

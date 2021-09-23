@@ -42,6 +42,7 @@ BehaviorTreeFactory::BehaviorTreeFactory()
     registerNodeType<RetryNode>("RetryUntilSuccesful"); //typo but back compatibility
     registerNodeType<RetryNode>("RetryUntilSuccessful"); // correct one
     registerNodeType<KeepRunningUntilFailureNode>("KeepRunningUntilFailure");
+    registerNodeType<KeepRunningUntilSuccessNode>("KeepRunningUntilSuccess");
     registerNodeType<RepeatNode>("Repeat");
     registerNodeType<TimeoutNode<>>("Timeout");
     registerNodeType<DelayNode>("Delay");
@@ -256,7 +257,7 @@ const std::set<std::string> &BehaviorTreeFactory::builtinNodes() const
 Tree BehaviorTreeFactory::createTreeFromText(const std::string &text,
                                              Blackboard::Ptr blackboard)
 {
-    XMLParser parser(*this);
+    XMLParser parser(*this);    //一定要注意xml中节点的名称与注册的名称是否一致
     parser.loadFromText(text);
     auto tree = parser.instantiateTree(blackboard);
     tree.manifests = this->manifests();

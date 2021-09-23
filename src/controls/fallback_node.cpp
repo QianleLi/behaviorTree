@@ -54,6 +54,7 @@ NodeStatus FallbackNode::tick()
 
             case NodeStatus::IDLE:
             {
+                std::cout << "A child node must never return IDLE" << std::endl;
                 throw LogicError("A child node must never return IDLE");
             }
         }   // end switch

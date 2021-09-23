@@ -29,7 +29,9 @@ static const char* xml_text = R"(
      <BehaviorTree ID="MainTree">
         <InfiniteRecoveryNode name="root_sequence">
             <CheckBattery   name="battery_ok"/>
-            <OpenGripper    name="open_gripper"/>
+            <KeepRunningUntilSuccess>
+                <OpenGripper    name="open_gripper"/>
+            </KeepRunningUntilSuccess>
         </InfiniteRecoveryNode>
      </BehaviorTree>
 
@@ -42,7 +44,7 @@ int main()
 
     using namespace DummyNodes;
 
-    factory.registerSimpleCondition("CheckBattery", std::bind(CheckBattery));
+    factory.registerSimpleCondition("CheckBattery", std::bind(CheckBatteryForceFail));
 
     GripperInterface gripper;
     factory.registerSimpleAction("OpenGripper", std::bind(&GripperInterface::open_after_retries, &gripper));

@@ -75,6 +75,16 @@ BT::NodeStatus ApproachObject::tick()
     return BT::NodeStatus::SUCCESS;
 }
 
+BT::NodeStatus LeaveMessages::tick()
+{
+    message = "This is the message I left!!!";
+    setOutput("message", message);
+    setOutput("float_number", float_number);
+    setOutput("int_number", int_number);
+    std::cout << "Someone left messages!!!" << std::endl;
+    return BT::NodeStatus::SUCCESS;
+}
+
 BT::NodeStatus SaySomething::tick()
 {
     auto msg = getInput<std::string>("message");
@@ -84,6 +94,25 @@ BT::NodeStatus SaySomething::tick()
     }
 
     std::cout << "Robot says: " << msg.value() << std::endl;
+    return BT::NodeStatus::SUCCESS;
+}
+
+BT::NodeStatus SayLotsSomething::tick()
+{
+    auto msg1 = getInput<std::string>("message");
+    /*
+    if (!msg)
+    {
+        throw BT::RuntimeError( "missing required input [message]: ", msg.error() );
+    }*/
+    std::cout << "Robot says: " << msg1.value() << std::endl;
+    auto msg2 = getInput<float>("float_number");
+    float float_number = msg2.value();
+    std::cout << "The float number is " << float_number << "." << std::endl;
+    auto msg3 = getInput<int>("int_number");
+    int int_number = msg3.value();
+    std::cout << "The int number is " << int_number << "." << std::endl;
+    std::cout << "The multiple is " << int_number*float_number << "." << std::endl;
     return BT::NodeStatus::SUCCESS;
 }
 

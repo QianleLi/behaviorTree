@@ -107,6 +107,7 @@ class Blackboard
         }
         else
         {
+            std::cout << "Blackboard::get() error. Missing key [" << key << "]";
             throw RuntimeError("Blackboard::get() error. Missing key [", key, "]");
         }
     }
@@ -165,7 +166,8 @@ class Blackboard
                 if( mismatching )
                 {
                     debugMessage();
-
+                    std::cout << "Blackboard::set() failed: once declared, the type of a port shall not change. Declared type [" << demangle( locked_type )
+                    << "] != current type [" << demangle( typeid(T) ) << "]";
                     throw LogicError( "Blackboard::set() failed: once declared, the type of a port shall not change. "
                                      "Declared type [", demangle( locked_type ),
                                      "] != current type [", demangle( typeid(T) ),"]" );
