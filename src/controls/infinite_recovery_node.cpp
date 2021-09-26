@@ -69,10 +69,10 @@ BT::NodeStatus InfiniteRecoveryNode::tick()
                 return BT::NodeStatus::RUNNING;
             }
 
-            case BT::NodeStatus::FAILURE://如果失败下一次继续tick第二个
+            case BT::NodeStatus::FAILURE://如果失败结束
             {
-                ControlNode::haltChild(1);
-                return BT::NodeStatus::RUNNING;
+                //ControlNode::haltChild(1);
+                return BT::NodeStatus::FAILURE;
             }
             case BT::NodeStatus::RUNNING:
             {

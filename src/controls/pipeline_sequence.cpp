@@ -45,7 +45,7 @@ BT::NodeStatus PipelineSequence::tick()
                 ControlNode::haltChildren();
                 last_child_ticked_ = 0;  // reset
                 return status;
-            case BT::NodeStatus::SUCCESS:  //返回成功，什么也不做，下一帧再从第一个节点开始tick
+            case BT::NodeStatus::SUCCESS:  //返回成功，什
                 // do nothing and continue on to the next child. If it is the last child
                 // we'll exit the loop and hit the wrap-up code at the end of the method.
                 break;

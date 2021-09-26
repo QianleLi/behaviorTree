@@ -98,21 +98,14 @@ XMLParser::~XMLParser()
 
 void XMLParser::loadFromFile(const std::string& filename)
 {
-    std::cout << "load From File 1" <<std::endl;
     _p->opened_documents.emplace_back(new BT_TinyXML2::XMLDocument());
-    std::cout << "load From File 2" <<std::endl;
     BT_TinyXML2::XMLDocument* doc = _p->opened_documents.back().get();
-    std::cout << "load From File 3" <<std::endl;
     doc->LoadFile(filename.c_str());
-    std::cout << "load From File 4" <<std::endl;
 
     filesystem::path file_path( filename );
-    std::cout << "load From File 5" <<std::endl;
     _p->current_path = file_path.parent_path().make_absolute();
-    std::cout << "load From File 6" <<std::endl;
 
     _p->loadDocImpl( doc );
-    std::cout << "load From File 7" <<std::endl;
 }
 
 void XMLParser::loadFromText(const std::string& xml_text)
@@ -129,7 +122,7 @@ void XMLParser::Pimpl::loadDocImpl(BT_TinyXML2::XMLDocument* doc)
     if (doc->Error())
     {
         char buffer[200];
-        std::cout << "Error parsing the XML: %s" <<std::endl;
+        std::cout << "Error parsing the XML: " << doc->ErrorName() << std::endl;
         sprintf(buffer, "Error parsing the XML: %s", doc->ErrorName() );
         throw RuntimeError(buffer);
     }

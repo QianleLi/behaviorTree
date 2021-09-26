@@ -12,6 +12,7 @@ MinitraceLogger::MinitraceLogger(const Tree &tree, const char* filename_json)
     bool expected = false;
     if (!ref_count.compare_exchange_strong(expected, true))
     {
+        std::cout << "Only one instance of StdCoutLogger shall be created" << std::endl;
         throw LogicError("Only one instance of StdCoutLogger shall be created");
     }
 

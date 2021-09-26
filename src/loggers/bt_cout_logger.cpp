@@ -9,7 +9,7 @@ StdCoutLogger::StdCoutLogger(const BT::Tree& tree) : StatusChangeLogger(tree.roo
     bool expected = false;
     if (!ref_count.compare_exchange_strong(expected, true))
     {
-
+        std::cout << "Only one instance of StdCoutLogger shall be created" << std::endl;
         throw LogicError("Only one instance of StdCoutLogger shall be created");
     }
 }
