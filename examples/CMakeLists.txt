@@ -63,3 +63,6 @@ target_link_libraries(mt03_one_frame_sequence ${BEHAVIOR_TREE_LIBRARY} bt_sample
 
 add_executable(mt04_test_blackboard  mt04_test_blackboard.cpp )
 target_link_libraries(mt04_test_blackboard ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
+
+add_executable(mt05_test_convert  mt05_test_convert.cpp )
+target_link_libraries(mt05_test_convert ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
