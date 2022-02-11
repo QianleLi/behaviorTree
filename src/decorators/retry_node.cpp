@@ -18,19 +18,13 @@ namespace BT
 constexpr const char* RetryNode::NUM_ATTEMPTS;
 
 RetryNode::RetryNode(const std::string& name, int NTries)
-    : DecoratorNode(name, {} ),
-    max_attempts_(NTries),
-    try_index_(0),
-    read_parameter_from_ports_(false)
+  : DecoratorNode(name, {}), max_attempts_(NTries), try_index_(0), read_parameter_from_ports_(false)
 {
-    setRegistrationID("RetryUntilSuccessful");
+    setRegistrationID("RetrySeveralTimes");
 }
 
 RetryNode::RetryNode(const std::string& name, const NodeConfiguration& config)
-  : DecoratorNode(name, config),
-    max_attempts_(0),
-    try_index_(0),
-    read_parameter_from_ports_(true)
+  : DecoratorNode(name, config), max_attempts_(0), try_index_(0), read_parameter_from_ports_(true)
 {
 }
 
@@ -42,11 +36,12 @@ void RetryNode::halt()
 
 NodeStatus RetryNode::tick()
 {
-    if( read_parameter_from_ports_ )
+    if (read_parameter_from_ports_)
     {
-        if( !getInput(NUM_ATTEMPTS, max_attempts_) )
+        if (!getInput(NUM_ATTEMPTS, max_attempts_))
         {
-            throw RuntimeError("Missing parameter [", NUM_ATTEMPTS,"] in RetryNode");
+            printf("Missing parameter [", NUM_ATTEMPTS, "] in RetryNode\n");
+            max_attempts_ = 10;
         }
     }
 
@@ -57,27 +52,23 @@ NodeStatus RetryNode::tick()
         NodeStatus child_state = child_node_->executeTick();
         switch (child_state)
         {
-            case NodeStatus::SUCCESS:
-            {
+            case NodeStatus::SUCCESS: {
                 try_index_ = 0;
                 haltChild();
                 return (NodeStatus::SUCCESS);
             }
 
-            case NodeStatus::FAILURE:
-            {
+            case NodeStatus::FAILURE: {
                 try_index_++;
                 haltChild();
             }
             break;
 
-            case NodeStatus::RUNNING:
-            {
+            case NodeStatus::RUNNING: {
                 return NodeStatus::RUNNING;
             }
 
-            default:
-            {
+            default: {
                 throw LogicError("A child node must never return IDLE");
             }
         }
@@ -87,4 +78,4 @@ NodeStatus RetryNode::tick()
     return NodeStatus::FAILURE;
 }
 
-}
+}   // namespace BT

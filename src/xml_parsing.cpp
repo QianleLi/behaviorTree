@@ -204,7 +204,7 @@ void VerifyXML(const std::string& xml_text,
         sprintf(buffer, "Error parsing the XML: %s", doc.ErrorName() );
         throw RuntimeError( buffer );
     }
-    std::cout << "Verify XML 1" <<std::endl;
+//    std::cout << "Verify XML 1" <<std::endl;
     //-------- Helper functions (lambdas) -----------------
     auto ThrowError = [&](int line_num, const std::string& text) {
         char buffer[256];

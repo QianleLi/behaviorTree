@@ -66,3 +66,6 @@ target_link_libraries(mt04_test_blackboard ${BEHAVIOR_TREE_LIBRARY} bt_sample_no
 
 add_executable(mt05_test_convert  mt05_test_convert.cpp )
 target_link_libraries(mt05_test_convert ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
+
+add_executable(mt06_retry_until_successful  mt06_retry_until_successful.cpp )
+target_link_libraries(mt06_retry_until_successful ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)

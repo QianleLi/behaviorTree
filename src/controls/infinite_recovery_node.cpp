@@ -70,7 +70,7 @@ BT::NodeStatus InfiniteRecoveryNode::tick()
         }
 
         default: {
-            throw BT::LogicError("A child node must never return IDLE");
+            printf("A child node must never return IDLE");
         }
     }   // end switch
 
