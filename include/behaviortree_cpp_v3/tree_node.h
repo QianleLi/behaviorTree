@@ -22,8 +22,8 @@
 #include "behaviortree_cpp_v3/blackboard.h"
 #include "behaviortree_cpp_v3/utils/strcat.hpp"
 
-#ifdef _MSC_VER 
-#pragma warning(disable : 4127) 
+#ifdef _MSC_VER
+#pragma warning(disable : 4127)
 #endif
 
 namespace BT
@@ -140,7 +140,7 @@ class TreeNode
 
     // function provide mostrly for debugging purpose to see the raw value
     // in the port (no remapping and no conversion to a type)
-    StringView getRawPortValue(const std::string &key) const;
+    StringView getRawPortValue(const std::string& key) const;
 
     /// Check a string and return true if it matches either one of these
     /// two patterns:  {...} or ${...}
@@ -244,6 +244,8 @@ inline Result TreeNode::setOutput(const std::string& key, const T& value)
 {
     if (!config_.blackboard)
     {
+        printf("\"setOutput() failed: trying to access a Blackboard(BB) entry, but BB is "
+               "invalid\"");
         return nonstd::make_unexpected("setOutput() failed: trying to access a "
                                        "Blackboard(BB) entry, but BB is invalid");
     }
@@ -251,6 +253,9 @@ inline Result TreeNode::setOutput(const std::string& key, const T& value)
     auto remap_it = config_.output_ports.find(key);
     if (remap_it == config_.output_ports.end())
     {
+        std::cout << "setOutput() failed: NodeConfiguration::output_ports does not contain the "
+                     "key: ["
+                  << key << "]" << std::endl;
         return nonstd::make_unexpected(StrCat("setOutput() failed: NodeConfiguration::output_ports "
                                               "does not "
                                               "contain the key: [",

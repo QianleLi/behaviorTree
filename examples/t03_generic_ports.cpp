@@ -12,26 +12,26 @@ struct Position2D { double x,y; };
 
 // It is recommended (or, in some cases, mandatory) to define a template
 // specialization of convertFromString that converts a string to Position2D.
-namespace BT
-{
-template <> inline Position2D convertFromString(StringView str)
-{
-    printf("Converting string: \"%s\"\n", str.data() );
-
-    // real numbers separated by semicolons
-    auto parts = splitString(str, ';');
-    if (parts.size() != 2)
-    {
-        throw RuntimeError("invalid input)");
-    }
-    else{
-        Position2D output;
-        output.x     = convertFromString<double>(parts[0]);
-        output.y     = convertFromString<double>(parts[1]);
-        return output;
-    }
-}
-} // end namespace BT
+//namespace BT
+//{
+//template <> inline Position2D convertFromString(StringView str)
+//{
+//    printf("Converting string: \"%s\"\n", str.data() );
+//
+//    // real numbers separated by semicolons
+//    auto parts = splitString(str, ';');
+//    if (parts.size() != 2)
+//    {
+//        throw RuntimeError("invalid input)");
+//    }
+//    else{
+//        Position2D output;
+//        output.x     = convertFromString<double>(parts[0]);
+//        output.y     = convertFromString<double>(parts[1]);
+//        return output;
+//    }
+//}
+//} // end namespace BT
 
 
 class CalculateGoal: public SyncActionNode

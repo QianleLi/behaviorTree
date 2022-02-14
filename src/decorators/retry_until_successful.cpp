@@ -27,19 +27,12 @@ NodeStatus RetryUntilSuccessful::tick()
         switch (child_state)
         {
             case NodeStatus::SUCCESS: {
-                printf("SUCCESS\n");
                 haltChild();
                 return NodeStatus::SUCCESS;
             }
 
-            case NodeStatus::FAILURE: {
-                printf("FAILURE\n");
-                return NodeStatus::RUNNING;
-                break;
-            }
-
+            case NodeStatus::FAILURE:
             case NodeStatus::RUNNING: {
-                printf("RUNNING\n");
                 return NodeStatus::RUNNING;
                 break;
             }

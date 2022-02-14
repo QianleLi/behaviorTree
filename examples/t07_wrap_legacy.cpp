@@ -27,6 +27,7 @@ namespace BT
 {
 template <> Point3D convertFromString(StringView key)
 {
+    printf("Converting string: \"%s\"\n", key.data());
     // three real numbers separated by semicolons
     auto parts = BT::splitString(key, ';');
     if (parts.size() != 3)
