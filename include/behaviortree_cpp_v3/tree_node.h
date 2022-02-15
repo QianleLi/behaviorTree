@@ -194,6 +194,8 @@ inline Result TreeNode::getInput(const std::string& key, T& destination) const
     auto remap_it = config_.input_ports.find(key);
     if (remap_it == config_.input_ports.end())
     {
+        std::cout << "getInput() failed because NodeConfiguration::input_ports does not contain the key: [" << key << "]"
+                  << std::endl;
         return nonstd::make_unexpected(StrCat("getInput() failed because "
                                               "NodeConfiguration::input_ports "
                                               "does not contain the key: [",
@@ -211,6 +213,7 @@ inline Result TreeNode::getInput(const std::string& key, T& destination) const
 
         if (!config_.blackboard)
         {
+            std::cout << "getInput() failed: trying to access a Blackboard(BB) entry, but BB is invalid" << std::endl;
             return nonstd::make_unexpected("getInput() trying to access a Blackboard(BB) entry, "
                                            "but BB is invalid");
         }
@@ -229,6 +232,8 @@ inline Result TreeNode::getInput(const std::string& key, T& destination) const
             return {};
         }
 
+        std::cout << "getInput() failed: NodeConfiguration::output_ports does not contain the key: [" << key
+                  << "] remapped to [" << remapped_key << "]" <<  std::endl;
         return nonstd::make_unexpected(StrCat("getInput() failed because it was unable to find the "
                                               "key [",
                                               key, "] remapped to [", remapped_key, "]"));

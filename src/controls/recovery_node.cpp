@@ -27,6 +27,7 @@ RecoveryNode::RecoveryNode(
       retry_count_(0)
 {
     getInput("number_of_retries", number_of_retries_);
+    printf("number of retries: %d \n", number_of_retries_);
     setRegistrationID("RecoveryNode");
 }
 

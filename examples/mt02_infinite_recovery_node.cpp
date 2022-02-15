@@ -7,36 +7,35 @@
 #include "dummy_nodes.h"
 #include "behaviortree_cpp_v3/loggers/bt_cout_logger.h"
 using namespace BT;
-/*
 static const char* xml_text = R"(
 
  <root main_tree_to_execute = "MainTree" >
 
      <BehaviorTree ID="MainTree">
-        <RecoveryNode number_of_retries="6" name="root_sequence">
+        <RecoveryNode name="root_sequence" number_of_retries="6" >
             <CheckBattery   name="battery_ok"/>
             <OpenGripper    name="open_gripper"/>
         </RecoveryNode>
      </BehaviorTree>
 
  </root>
- )";*/
-
-static const char* xml_text = R"(
-
- <root main_tree_to_execute = "MainTree" >
-
-     <BehaviorTree ID="MainTree">
-        <InfiniteRecoveryNode name="root_sequence">
-            <CheckBattery   name="battery_ok"/>
-            <KeepRunningUntilSuccess>
-                <OpenGripper    name="open_gripper"/>
-            </KeepRunningUntilSuccess>
-        </InfiniteRecoveryNode>
-     </BehaviorTree>
-
- </root>
  )";
+
+//static const char* xml_text = R"(
+//
+// <root main_tree_to_execute = "MainTree" >
+//
+//     <BehaviorTree ID="MainTree">
+//        <InfiniteRecoveryNode name="root_sequence">
+//            <CheckBattery   name="battery_ok"/>
+//            <KeepRunningUntilSuccess>
+//                <OpenGripper    name="open_gripper"/>
+//            </KeepRunningUntilSuccess>
+//        </InfiniteRecoveryNode>
+//     </BehaviorTree>
+//
+// </root>
+// )";
 
 int main()
 {

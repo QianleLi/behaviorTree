@@ -46,4 +46,26 @@ The library is modified for our smart vacuum cleaner project and the boost lib w
 
 类似于逻辑运算或。子节点依次执行，只要一个节点成功，整个Fallback成功；所有子节点失败则整个Fallback失败。可以利用子节点的先后顺序来优先执行更高优先级的方法。在运行过程中只有子节点返回RUNNING才会暂停，下一次继续tick该RUNNING节点。如果所有节点只返回SUCCESS or FAILURE，那么Fallback一帧即可执行完毕。
 
- 
+
+
+# BT使用踩坑记录
+
+1. 如果一个节点有参数直接在XML文件中写死，那么getInput必须放在节点的构造函数中。比如如下XML文件片段，MaxLinear和MaxLinear必须在Controller节点的构造函数中获取。     
+
+   ```xml
+   <Controller MaxLinear="0.25f" MaxAngular="1.5f" ControllerType="{ControllerType}"
+               TurnAngle="{TurnAngle}" LinearVelocity="{LinearVelocity}"
+               AngularVelocity="{AngularVelocity}" NewPlan="{NewPlan}"
+               NavigationPath="{NavigationPath}" EmergencyBack="{EmergencyBack}"/>
+   ```
+
+   ```c++
+   BTController::BTController(const std::string &name, const BT::NodeConfiguration &config, Chassis *cha)
+       : BT::SyncActionNode(name, config), cha_(cha), controller_(BT::ControllerType_::STRICT_TRACKER)
+   {
+       getInput("MaxLinear", vel_lim_.v);
+       getInput("MaxAngular", vel_lim_.w);
+   }
+   ```
+
+2. 同一个节点在一次tick中不能对blackboard中的一个key既读取又写入，否则会显示没有这个key！！！  
