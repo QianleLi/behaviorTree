@@ -23,10 +23,7 @@ static uint16_t getUID()
 }
 
 TreeNode::TreeNode(std::string name, NodeConfiguration config)
-  : name_(std::move(name)),
-    status_(NodeStatus::IDLE),
-    uid_(getUID()),
-    config_(std::move(config))
+  : name_(std::move(name)), status_(NodeStatus::IDLE), uid_(getUID()), config_(std::move(config))
 {
 }
 
@@ -63,7 +60,7 @@ NodeStatus TreeNode::waitValidStatus()
 {
     std::unique_lock<std::mutex> lock(state_mutex_);
 
-    while( isHalted() )
+    while (isHalted())
     {
         state_condition_variable_.wait(lock);
     }
@@ -96,33 +93,38 @@ const std::string& TreeNode::registrationName() const
     return registration_ID_;
 }
 
-const NodeConfiguration &TreeNode::config() const
+const NodeConfiguration& TreeNode::config() const
 {
     return config_;
 }
 
 StringView TreeNode::getRawPortValue(const std::string& key) const
 {
-  auto remap_it = config_.input_ports.find(key);
-  if (remap_it == config_.input_ports.end())
-  {
-    throw std::logic_error(StrCat("getInput() failed because "
-      "NodeConfiguration::input_ports "
-      "does not contain the key: [",
-      key, "]"));
-  }
-  return remap_it->second;
+    auto remap_it = config_.input_ports.find(key);
+    if (remap_it == config_.input_ports.end())
+    {
+        std::cout << "getInput() failed because NodeConfiguration::input_ports does not contain "
+                     "the key: ["
+                  << key << "]" << std::endl;
+        throw std::logic_error(StrCat("getInput() failed because "
+                                      "NodeConfiguration::input_ports "
+                                      "does not contain the key: [",
+                                      key, "]"));
+    }
+    return remap_it->second;
 }
 
 bool TreeNode::isBlackboardPointer(StringView str)
 {
     const auto size = str.size();
-    if( size >= 3 && str.back() == '}')
+    if (size >= 3 && str.back() == '}')
     {
-        if( str[0] == '{') {
+        if (str[0] == '{')
+        {
             return true;
         }
-        if( size >= 4 && str[0] == '$' && str[1] == '{') {
+        if (size >= 4 && str[0] == '$' && str[1] == '{')
+        {
             return true;
         }
     }
@@ -132,13 +134,15 @@ bool TreeNode::isBlackboardPointer(StringView str)
 StringView TreeNode::stripBlackboardPointer(StringView str)
 {
     const auto size = str.size();
-    if( size >= 3 && str.back() == '}')
+    if (size >= 3 && str.back() == '}')
     {
-        if( str[0] == '{') {
-            return str.substr(1, size-2);
+        if (str[0] == '{')
+        {
+            return str.substr(1, size - 2);
         }
-        if( str[0] == '$' && str[1] == '{') {
-            return str.substr(2, size-3);
+        if (str[0] == '$' && str[1] == '{')
+        {
+            return str.substr(2, size - 3);
         }
     }
     return {};
@@ -146,32 +150,36 @@ StringView TreeNode::stripBlackboardPointer(StringView str)
 
 Optional<StringView> TreeNode::getRemappedKey(StringView port_name, StringView remapping_value)
 {
-    if( remapping_value == "=" )
+    if (remapping_value == "=")
     {
         return {port_name};
     }
-    if( isBlackboardPointer( remapping_value ) )
+    if (isBlackboardPointer(remapping_value))
     {
         return {stripBlackboardPointer(remapping_value)};
     }
+    std::cout << remapping_value
+              << " is not a blackboard pointer, which means you have assigned a value to a key. "
+                 "This is not a problem."
+              << std::endl;
     return nonstd::make_unexpected("Not a blackboard pointer");
 }
 
-void TreeNode::modifyPortsRemapping(const PortsRemapping &new_remapping)
+void TreeNode::modifyPortsRemapping(const PortsRemapping& new_remapping)
 {
-    for (const auto& new_it: new_remapping)
+    for (const auto& new_it : new_remapping)
     {
-        auto it = config_.input_ports.find( new_it.first );
-        if( it != config_.input_ports.end() )
+        auto it = config_.input_ports.find(new_it.first);
+        if (it != config_.input_ports.end())
         {
             it->second = new_it.second;
         }
-        it = config_.output_ports.find( new_it.first );
-        if( it != config_.output_ports.end() )
+        it = config_.output_ports.find(new_it.first);
+        if (it != config_.output_ports.end())
         {
             it->second = new_it.second;
         }
     }
 }
 
-}   // end namespace
+}   // namespace BT

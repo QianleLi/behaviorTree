@@ -15,7 +15,6 @@
 
 namespace BT
 {
-
 /**
  * @brief The Blackboard is the mechanism used by BehaviorTrees to exchange
  * typed data.
@@ -27,17 +26,17 @@ class Blackboard
 
   protected:
     // This is intentionally protected. Use Blackboard::create instead
-    Blackboard(Blackboard::Ptr parent): parent_bb_(parent)
-    {}
+    Blackboard(Blackboard::Ptr parent) : parent_bb_(parent)
+    {
+    }
 
   public:
-
     /** Use this static method to create an instance of the BlackBoard
     *   to share among all your NodeTrees.
     */
     static Blackboard::Ptr create(Blackboard::Ptr parent = {})
     {
-        return std::shared_ptr<Blackboard>( new Blackboard(parent) );
+        return std::shared_ptr<Blackboard>(new Blackboard(parent));
     }
 
     virtual ~Blackboard() = default;
@@ -52,32 +51,32 @@ class Blackboard
     {
         std::unique_lock<std::mutex> lock(mutex_);
 
-        if( auto parent = parent_bb_.lock())
+        if (auto parent = parent_bb_.lock())
         {
             auto remapping_it = internal_to_external_.find(key);
-            if( remapping_it != internal_to_external_.end())
+            if (remapping_it != internal_to_external_.end())
             {
-                return parent->getAny( remapping_it->second );
+                return parent->getAny(remapping_it->second);
             }
         }
         auto it = storage_.find(key);
-        return ( it == storage_.end()) ? nullptr : &(it->second.value);
+        return (it == storage_.end()) ? nullptr : &(it->second.value);
     }
 
     Any* getAny(const std::string& key)
     {
         std::unique_lock<std::mutex> lock(mutex_);
 
-        if( auto parent = parent_bb_.lock())
+        if (auto parent = parent_bb_.lock())
         {
             auto remapping_it = internal_to_external_.find(key);
-            if( remapping_it != internal_to_external_.end())
+            if (remapping_it != internal_to_external_.end())
             {
-                return parent->getAny( remapping_it->second );
+                return parent->getAny(remapping_it->second);
             }
         }
         auto it = storage_.find(key);
-        return ( it == storage_.end()) ? nullptr : &(it->second.value);
+        return (it == storage_.end()) ? nullptr : &(it->second.value);
     }
 
     /** Return true if the entry with the given key was found.
@@ -90,8 +89,13 @@ class Blackboard
         if (val)
         {
             value = val->cast<T>();
+            return (bool)val;
         }
-        return (bool)val;
+        else
+        {
+            std::cout << "Blackboard::get() error. Missing key [" << key << "]";
+            throw RuntimeError("Blackboard::get() error. Missing key [", key, "]");
+        }
     }
 
     /**
@@ -112,7 +116,6 @@ class Blackboard
         }
     }
 
-
     /// Update the entry with the given key
     template <typename T>
     void set(const std::string& key, const T& value)
@@ -120,29 +123,30 @@ class Blackboard
         std::unique_lock<std::mutex> lock(mutex_);
         auto it = storage_.find(key);
 
-        if( auto parent = parent_bb_.lock())
+        if (auto parent = parent_bb_.lock())
         {
             auto remapping_it = internal_to_external_.find(key);
-            if( remapping_it != internal_to_external_.end())
+            if (remapping_it != internal_to_external_.end())
             {
                 const auto& remapped_key = remapping_it->second;
-                if( it == storage_.end() ) // virgin entry
+                if (it == storage_.end())   // virgin entry
                 {
                     auto parent_info = parent->portInfo(remapped_key);
-                    if( parent_info )
+                    if (parent_info)
                     {
-                        storage_.insert( {key, Entry( *parent_info ) } );
+                        storage_.insert({key, Entry(*parent_info)});
                     }
-                    else{
-                        storage_.insert( {key, Entry( PortInfo() ) } );
+                    else
+                    {
+                        storage_.insert({key, Entry(PortInfo())});
                     }
                 }
-                parent->set( remapped_key, value );
+                parent->set(remapped_key, value);
                 return;
             }
         }
 
-        if( it != storage_.end() ) // already there. check the type
+        if (it != storage_.end())   // already there. check the type
         {
             const PortInfo& port_info = it->second.port_info;
             auto& previous_any = it->second.value;
@@ -150,40 +154,45 @@ class Blackboard
 
             Any temp(value);
 
-            if( locked_type && *locked_type != typeid(T) && *locked_type != temp.type() )
+            if (locked_type && *locked_type != typeid(T) && *locked_type != temp.type())
             {
                 bool mismatching = true;
-                if( std::is_constructible<StringView, T>::value )
+                if (std::is_constructible<StringView, T>::value)
                 {
-                    Any any_from_string = port_info.parseString( value );
-                    if( any_from_string.empty() == false)
+                    Any any_from_string = port_info.parseString(value);
+                    if (any_from_string.empty() == false)
                     {
                         mismatching = false;
-                        temp = std::move( any_from_string );
+                        temp = std::move(any_from_string);
                     }
                 }
 
-                if( mismatching )
+                if (mismatching)
                 {
                     debugMessage();
-                    std::cout << "Blackboard::set() failed: once declared, the type of a port shall not change. Declared type [" << demangle( locked_type )
-                    << "] != current type [" << demangle( typeid(T) ) << "]";
-                    throw LogicError( "Blackboard::set() failed: once declared, the type of a port shall not change. "
-                                     "Declared type [", demangle( locked_type ),
-                                     "] != current type [", demangle( typeid(T) ),"]" );
+                    std::cout << "Blackboard::set() failed: once declared, the type of a port "
+                                 "shall not change. Declared type ["
+                              << demangle(locked_type) << "] != current type ["
+                              << demangle(typeid(T)) << "]";
+                    throw LogicError("Blackboard::set() failed: once declared, the type of a port "
+                                     "shall not change. "
+                                     "Declared type [",
+                                     demangle(locked_type), "] != current type [",
+                                     demangle(typeid(T)), "]");
                 }
             }
             previous_any = std::move(temp);
         }
-        else{ // create for the first time without any info
-            storage_.emplace( key, Entry( Any(value), PortInfo() ) );
+        else
+        {   // create for the first time without any info
+            storage_.emplace(key, Entry(Any(value), PortInfo()));
         }
         return;
     }
 
     void setPortInfo(std::string key, const PortInfo& info);
 
-    const PortInfo *portInfo(const std::string& key);
+    const PortInfo* portInfo(const std::string& key);
 
     void addSubtreeRemapping(StringView internal, StringView external);
 
@@ -197,31 +206,28 @@ class Blackboard
         storage_.clear();
         internal_to_external_.clear();
     }
-  
-  private:
 
-    struct Entry{
+  private:
+    struct Entry
+    {
         Any value;
         const PortInfo port_info;
 
-        Entry( const PortInfo& info ):
-          port_info(info)
-        {}
+        Entry(const PortInfo& info) : port_info(info)
+        {
+        }
 
-        Entry(Any&& other_any, const PortInfo& info):
-          value(std::move(other_any)),
-          port_info(info)
-        {}
+        Entry(Any&& other_any, const PortInfo& info) : value(std::move(other_any)), port_info(info)
+        {
+        }
     };
 
     mutable std::mutex mutex_;
     std::unordered_map<std::string, Entry> storage_;
     std::weak_ptr<Blackboard> parent_bb_;
-    std::unordered_map<std::string,std::string> internal_to_external_;
-
+    std::unordered_map<std::string, std::string> internal_to_external_;
 };
 
-
-} // end namespace
+}   // namespace BT
 
 #endif   // BLACKBOARD_H

@@ -3,6 +3,8 @@
 //
 // A test program to test one_frame_fallback
 
+//-D CMAKE_TOOLCHAIN_FILE=./find/toolchainRK.cmake
+
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "dummy_nodes.h"
 #include "behaviortree_cpp_v3/loggers/bt_cout_logger.h"

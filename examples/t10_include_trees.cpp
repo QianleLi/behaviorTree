@@ -9,15 +9,16 @@ int main(int argc, char** argv)
     BehaviorTreeFactory factory;
     DummyNodes::RegisterNodes(factory);
 
-    if( argc != 2)
-    {
-        std::cout <<" missing name of the XML file to open" << std::endl;
-        return 1;
-    }
+//    if( argc != 2)
+//    {
+//        std::cout <<" missing name of the XML file to open" << std::endl;
+//        return 1;
+//    }
 
     // IMPORTANT: when the object tree goes out of scope,
     // all the TreeNodes are destroyed
-    auto tree = factory.createTreeFromFile(argv[1]);
+    printf("1\n");
+    auto tree = factory.createTreeFromFile(R"(./subtree_test.xml)");
 
     printTreeRecursively( tree.rootNode() );
 
