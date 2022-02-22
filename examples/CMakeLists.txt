@@ -75,3 +75,6 @@ target_link_libraries(mt07_test_output_and_input ${BEHAVIOR_TREE_LIBRARY} bt_sam
 
 add_executable(mt08_test_multi_tree mt08_test_multi_tree.cpp)
 target_link_libraries(mt08_test_multi_tree ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
+
+add_executable(mt09_test_sub_tree mt09_test_sub_tree.cpp)
+target_link_libraries(mt09_test_sub_tree ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
