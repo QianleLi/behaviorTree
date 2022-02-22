@@ -2,9 +2,8 @@
 // Created by Qianle Li on 2022/2/15.
 //
 #include "behaviortree_cpp_v3/bt_factory.h"
-
 #include "dummy_nodes.h"
-#include "movebase_node.h"
+//TODO 注意，一次tick不能同时对一个key输出和读取，本测试即为此而生
 
 using namespace BT;
 
@@ -83,11 +82,12 @@ class MySaySomething : public BT::SyncActionNode
     }
 
     // You must override the virtual function tick()
-    BT::NodeStatus tick() override{
+    BT::NodeStatus tick() override
+    {
         auto msg = getInput<std::string>("text");
         if (!msg)
         {
-            throw BT::RuntimeError( "missing required input [text]: ", msg.error() );
+            throw BT::RuntimeError("missing required input [text]: ", msg.error());
         }
 
         std::cout << "I says: " << msg.value() << std::endl;

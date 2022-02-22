@@ -24,6 +24,7 @@ void DecoratorNode::setChild(TreeNode* child)
 {
     if (child_node_)
     {
+        std::cout << "Decorator [" << name() << "] has already a child assigned" << std::endl;
         throw BehaviorTreeException("Decorator [", name(), "] has already a child assigned");
     }
 
@@ -48,7 +49,8 @@ TreeNode* DecoratorNode::child()
 
 void DecoratorNode::haltChild()
 {
-    if( !child_node_ ){
+    if (!child_node_)
+    {
         return;
     }
     if (child_node_->status() == NodeStatus::RUNNING)
@@ -73,11 +75,11 @@ NodeStatus DecoratorNode::executeTick()
 {
     NodeStatus status = TreeNode::executeTick();
     NodeStatus child_status = child()->status();
-    if( child_status == NodeStatus::SUCCESS || child_status == NodeStatus::FAILURE )
+    if (child_status == NodeStatus::SUCCESS || child_status == NodeStatus::FAILURE)
     {
         child()->setStatus(NodeStatus::IDLE);
     }
     return status;
 }
 
-}
+}   // namespace BT

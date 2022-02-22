@@ -1,7 +1,0 @@
-<root>
-
-    <BehaviorTree ID="Blablabla">
-        <SaySomething2    message="{the_answer}" />
-    </BehaviorTree>
-
-</root>
