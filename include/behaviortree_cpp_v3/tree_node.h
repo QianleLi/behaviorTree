@@ -235,11 +235,9 @@ inline Result TreeNode::getInput(const std::string& key, T& destination) const
             return {};
         }
 
-        std::cout << "getInput() failed: NodeConfiguration::output_ports does not contain the key: "
+        std::cout << "getInput() failed because it was unable to find the key"
                      "["
                   << key << "] remapped to [" << remapped_key << "]" << std::endl;
-        config_.blackboard->debugMessage();
-
         return nonstd::make_unexpected(StrCat("getInput() failed because it was unable to find the "
                                               "key [",
                                               key, "] remapped to [", remapped_key, "]"));

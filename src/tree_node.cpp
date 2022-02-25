@@ -158,10 +158,10 @@ Optional<StringView> TreeNode::getRemappedKey(StringView port_name, StringView r
     {
         return {stripBlackboardPointer(remapping_value)};
     }
-    std::cout << remapping_value
-              << " is not a blackboard pointer, which means you have assigned a value to a key. "
-                 "This is not a problem."
-              << std::endl;
+//    std::cout << remapping_value
+//              << " is not a blackboard pointer, which means you have assigned a value to a key. "
+//                 "This is not a problem."
+//              << std::endl;
     return nonstd::make_unexpected("Not a blackboard pointer");
 }
 
