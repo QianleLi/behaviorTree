@@ -56,13 +56,15 @@
 
 namespace BT
 {
-
 //Call the visitor for each node of the tree, given a root.
 void applyRecursiveVisitor(const TreeNode* root_node,
                            const std::function<void(const TreeNode*)>& visitor);
 
 //Call the visitor for each node of the tree, given a root.
 void applyRecursiveVisitor(TreeNode* root_node, const std::function<void(TreeNode*)>& visitor);
+
+void findSpecificTreeNode(TreeNode* root_node, const std::string& name,
+                          const std::function<bool(TreeNode*, const std::string&)>& visitor);
 
 /**
  * Debug function to print the hierarchy of the tree. Prints to std::cout by default.
@@ -97,6 +99,6 @@ inline NodeType getType()
     return NodeType::UNDEFINED;
     // clang-format on
 }
-}
+}   // namespace BT
 
 #endif   // BEHAVIOR_TREE_H

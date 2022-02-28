@@ -20,7 +20,8 @@ void applyRecursiveVisitor(const TreeNode* node,
 {
     if (!node)
     {
-        std::cout << "One of the children of a DecoratorNode or ControlNode is nullptr" << std::endl;
+        std::cout << "One of the children of a DecoratorNode or ControlNode is nullptr"
+                  << std::endl;
         throw LogicError("One of the children of a DecoratorNode or ControlNode is nullptr");
     }
 
@@ -43,7 +44,8 @@ void applyRecursiveVisitor(TreeNode* node, const std::function<void(TreeNode*)>&
 {
     if (!node)
     {
-        std::cout << "One of the children of a DecoratorNode or ControlNode is nullptr" << std::endl;
+        std::cout << "One of the children of a DecoratorNode or ControlNode is nullptr"
+                  << std::endl;
         throw LogicError("One of the children of a DecoratorNode or ControlNode is nullptr");
     }
 
@@ -58,8 +60,44 @@ void applyRecursiveVisitor(TreeNode* node, const std::function<void(TreeNode*)>&
     }
     else if (auto decorator = dynamic_cast<BT::DecoratorNode*>(node))
     {
-        if( decorator->child() ){
+        if (decorator->child())
+        {
             applyRecursiveVisitor(decorator->child(), visitor);
+        }
+    }
+}
+
+void findSpecificTreeNode(TreeNode* node, const std::string& name,
+                          const std::function<bool(TreeNode*, const std::string&)>& visitor)
+{
+    if (!node)
+    {
+        std::cout << "findSpecificTreeNode :One of the children of a DecoratorNode or ControlNode "
+                     "is nullptr"
+                  << std::endl;
+        throw LogicError("One of the children of a DecoratorNode or ControlNode is nullptr");
+    }
+    std::cout << "node name: " << node->name() << std::endl;
+
+    if (visitor(node, name))
+    {
+        std::cout << "find node with same name"<< std::endl;
+    }
+    else
+    {
+        if (auto control = dynamic_cast<BT::ControlNode*>(node))
+        {
+            for (const auto& child : control->children())
+            {
+                findSpecificTreeNode(child, name, visitor);
+            }
+        }
+        else if (auto decorator = dynamic_cast<BT::DecoratorNode*>(node))
+        {
+            if (decorator->child())
+            {
+                findSpecificTreeNode(decorator->child(), name, visitor);
+            }
         }
     }
 }
@@ -111,4 +149,4 @@ void buildSerializedStatusSnapshot(TreeNode* root_node, SerializedTreeStatus& se
     applyRecursiveVisitor(root_node, visitor);
 }
 
-} // end namespace
+}   // namespace BT
