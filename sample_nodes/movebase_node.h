@@ -68,4 +68,29 @@ class MoveBaseAction : public BT::AsyncActionNode
     std::atomic_bool _halt_requested;
 };
 
+class MyMoveBaseAction : public BT::AsyncActionNode
+{
+  public:
+    // Any TreeNode with ports must have a constructor with this signature
+    MyMoveBaseAction(const std::string& name, const BT::NodeConfiguration& config)
+      : AsyncActionNode(name, config)
+    {
+    }
+
+    // It is mandatory to define this static method.
+    static BT::PortsList providedPorts()
+    {
+        return{ BT::InputPort<Pose2D>("goal") };
+    }
+
+    BT::NodeStatus tick() override;
+
+    virtual void halt() override;
+
+  private:
+    std::atomic_bool _halt_requested;
+    std::atomic_int  _count;
+};
+
+
 #endif   // MOVEBASE_BT_NODES_H

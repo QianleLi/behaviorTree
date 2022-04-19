@@ -6,6 +6,7 @@
 BT_REGISTER_NODES(factory)
 {
     factory.registerNodeType<MoveBaseAction>("MoveBase");
+    factory.registerNodeType<MoveBaseAction>("MyAsyncMoveBase");
 }
 
 BT::NodeStatus MoveBaseAction::tick()
@@ -35,5 +36,31 @@ BT::NodeStatus MoveBaseAction::tick()
 
 void MoveBaseAction::halt()
 {
+    _halt_requested.store(true);
+}
+
+
+
+
+
+BT::NodeStatus MyMoveBaseAction::tick()
+{
+    Pose2D goal;
+    if ( !getInput<Pose2D>("goal", goal))
+    {
+        throw BT::RuntimeError("missing required input [goal]");
+    }
+
+    printf("[ MoveBase: STARTED ]. goal: x=%.f y=%.1f theta=%.2f\n", goal.x, goal.y, goal.theta);
+
+    _halt_requested.store(false);
+
+    std::cout << "[ MoveBase: FINISHED ]" << std::endl;
+    return _halt_requested ? BT::NodeStatus::FAILURE : BT::NodeStatus::SUCCESS;
+}
+
+void MyMoveBaseAction::halt()
+{
+    std::cout << "halt my move base" << std::endl;
     _halt_requested.store(true);
 }
