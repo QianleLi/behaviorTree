@@ -2,6 +2,7 @@
 
 #include "dummy_nodes.h"
 #include "movebase_node.h"
+#include <thread>
 
 using namespace BT;
 
@@ -32,12 +33,6 @@ static const char* xml_text_sequence = R"(
  )";
 // clang-format on
 
-void Assert(bool condition)
-{
-    if (!condition)
-        throw RuntimeError("this is not what I expected");
-}
-
 int main()
 {
     using namespace DummyNodes;
@@ -58,7 +53,7 @@ int main()
 
     while (tree.tickRoot() == BT::NodeStatus::RUNNING)
     {
-        std::cout << "tick once" << std::endl;
+        std::cout << "tick once " << std::this_thread::get_id() << std::endl;
         SleepMS(150);
     }
 

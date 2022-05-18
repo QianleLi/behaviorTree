@@ -177,6 +177,8 @@ NodeStatus BT::AsyncActionNode::executeTick()
         thread_handle_ = std::async(std::launch::async, [this]() {
 
             try {
+//                std::this_thread::sleep_for(std::chrono::milliseconds(150));
+                std::cout << "Async tick once "<< std::this_thread::get_id()  << std::endl;
                 setStatus(tick());
             }
             catch (std::exception&)

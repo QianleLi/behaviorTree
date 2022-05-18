@@ -350,15 +350,14 @@ void VerifyXML(const std::string& xml_text, const std::set<std::string>& registe
         else
         {
             // search in the factory and the list of subtrees
-            bool found = (registered_nodes.find(name) != registered_nodes.end());
-            if (!found)
+            if (registered_nodes.find(name) == registered_nodes.end())
             {
                 std::cout << std::string("Node not recognized: ") << name << std::endl;
                 ThrowError(node->GetLineNum(), std::string("Node not recognized: ") + name);
             }
         }
         //recursion
-        if (StrEqual(name, "SubTree") == false)
+        if (!StrEqual(name, "SubTree"))
         {
             for (auto child = node->FirstChildElement(); child != nullptr;
                  child = child->NextSiblingElement())

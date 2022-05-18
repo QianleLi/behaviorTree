@@ -52,14 +52,8 @@ if (CURSES_FOUND)
     target_link_libraries(t12_ncurses_manual_selector ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
 endif ()
 
-add_executable(mt01_one_frame_fallback mt01_one_frame_fallback.cpp)
-target_link_libraries(mt01_one_frame_fallback ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
-
 add_executable(mt02_infinite_recovery_node mt02_infinite_recovery_node.cpp)
 target_link_libraries(mt02_infinite_recovery_node ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
-
-add_executable(mt03_one_frame_sequence mt03_one_frame_sequence.cpp)
-target_link_libraries(mt03_one_frame_sequence ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
 
 add_executable(mt04_test_blackboard mt04_test_blackboard.cpp)
 target_link_libraries(mt04_test_blackboard ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
