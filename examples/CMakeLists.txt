@@ -78,3 +78,6 @@ target_link_libraries(mt10_test_find_node ${BEHAVIOR_TREE_LIBRARY} bt_sample_nod
 
 add_executable(mt11_test_async mt11_test_async.cpp)
 target_link_libraries(mt11_test_async ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)
+
+add_executable(mt12_set_blackboard mt12_set_blackboard.cpp)
+target_link_libraries(mt12_set_blackboard ${BEHAVIOR_TREE_LIBRARY} bt_sample_nodes)

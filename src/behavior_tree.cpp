@@ -77,7 +77,7 @@ void findSpecificTreeNode(TreeNode* node, const std::string& name,
                   << std::endl;
         throw LogicError("One of the children of a DecoratorNode or ControlNode is nullptr");
     }
-    std::cout << "node name: " << node->name() << std::endl;
+//    std::cout << "node name: " << node->name() << std::endl;
 
     if (visitor(node, name))
     {

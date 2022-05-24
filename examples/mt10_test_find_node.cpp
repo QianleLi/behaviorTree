@@ -72,7 +72,7 @@ int main()
     auto tree = factory.createTreeFromText(xml_text);
 
     auto checker = [=](BT::TreeNode* node, const std::string& name) {
-        std::cout << "checker node name: " << node->name() << std::endl;
+//        std::cout << "checker node name: " << node->name() << std::endl;
         if (node->name() == name)
         {
             node->executeTick();

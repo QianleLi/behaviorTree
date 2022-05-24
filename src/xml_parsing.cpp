@@ -261,7 +261,7 @@ void VerifyXML(const std::string& xml_text, const std::set<std::string>& registe
     recursiveStep = [&](const XMLElement* node) {
         const int children_count = ChildrenCount(node);
         const char* name = node->Name();
-        std::cout << "New node name: " << name << std::endl;
+//        std::cout << "New node name: " << name << std::endl;
         if (StrEqual(name, "Decorator"))
         {
             if (children_count != 1)
@@ -572,12 +572,12 @@ TreeNode::Ptr XMLParser::Pimpl::createNodeFromXML(const XMLElement* element,
                 auto direction = port_it->second.direction();
                 if (direction != PortDirection::OUTPUT)
                 {
-                    printf("Insert input port: %s \n", remap_it.first.c_str());
+//                    printf("Insert input port: %s \n", remap_it.first.c_str());
                     config.input_ports.insert(remap_it);
                 }
                 if (direction != PortDirection::INPUT)
                 {
-                    printf("Insert output port: %s \n", remap_it.first.c_str());
+//                    printf("Insert output port: %s \n", remap_it.first.c_str());
                     config.output_ports.insert(remap_it);
                 }
             }
